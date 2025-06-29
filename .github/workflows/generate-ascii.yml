@@ -1,4 +1,4 @@
-name: Generate GitHub ASCII Artwork
+name: Multi-Stage ASCII Workflow
 
 on:
   push:
@@ -17,6 +17,7 @@ jobs:
         run: sleep 15
 
   ascii_verify:
+    needs: ascii_generate
     runs-on: ubuntu-latest
     steps:
       - name: Wait briefly
@@ -26,6 +27,7 @@ jobs:
         run: test -s pipeline.txt
 
   ascii_output:
+    needs: ascii_verify
     runs-on: ubuntu-latest
     steps:
       - name: Display banner
