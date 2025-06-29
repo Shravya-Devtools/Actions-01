@@ -1,4 +1,4 @@
-name: Generate ASCII Artwork
+name: Generate GitHub ASCII Artwork
 on:
   push
 jobs:
@@ -7,13 +7,18 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4
-    - name: Install Coway Program
-      run: sudo apt-get install cowsay -y
-    - name: Execute Cowsay CMD
-      run: cowsay -f dragon "Run for cover, I am a DRAGON....RAWR" >> dragon.txt
-    - name: Test File Exists
-      run: grep -i "dragon" dragon.txt
-    - name: Read File
-      run: cat dragon.txt
+
+    - name: Install Figlet Program
+      run: sudo apt-get install figlet -y
+
+    - name: Create GitHub Actions Banner
+      run: figlet "GitHub Actions" > github_actions.txt
+
+    - name: Verify Output Contains 'GitHub'
+      run: grep -i "GitHub" github_actions.txt
+
+    - name: Read Banner File
+      run: cat github_actions.txt
+
     - name: List Repo Files
       run: ls -ltra
