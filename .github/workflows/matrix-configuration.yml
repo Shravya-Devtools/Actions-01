@@ -1,0 +1,29 @@
+name: Matrix Configuration
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        os: [ubuntu-latest, windows-latest] # Changed ubuntu-20.04 to ubuntu-latest
+        image: [hello-world, alpine]
+        exclude:
+          - os: windows-latest
+            image: alpine
+        include:
+          - os: ubuntu-latest # Changed ubuntu-20.04 to ubuntu-latest
+            image: amd64/alpine
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Echo Docker Details
+        run: docker info
+
+      - name: Run Image on ${{ matrix.os }}
+        run: docker run ${{ matrix.image }}
