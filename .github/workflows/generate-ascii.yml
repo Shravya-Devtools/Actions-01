@@ -11,37 +11,4 @@ jobs:
         run: sudo apt-get install figlet -y
 
       - name: Generate ASCII Banner
-        run: figlet "Hello World" > hello.txt
-
-      - name: Upload Banner as Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: hello-banner
-          path: hello.txt
-
-  verify_banner:
-    needs: generate_banner
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Banner Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: hello-banner
-
-      - name: Check File Exists
-        run: test -s hello.txt
-
-  deploy_banner:
-    needs: verify_banner
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Banner Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: hello-banner
-
-      - name: Show Banner
-        run: cat hello.txt
-
-      - name: Simulate Deployment
-        run: echo "Deploying Hello World Banner"
+        run: figlet
