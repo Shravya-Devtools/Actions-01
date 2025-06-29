@@ -1,18 +1,32 @@
 name: Generate GitHub ASCII Artwork
 
-on: push
+on:
+  push:
 
 jobs:
-    first-job:
-        runs-on: ubuntu-latest
-        steps:
-        - name: checkout repo
-          uses: actions/checkout@v4
+  ascii_generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install figlet
+        run: sudo apt-get install figlet -y
 
-        - name: List repo files
-          run: ls -ltra
+      - name: Generate ASCII Banner
+        run: figlet "CI Pipeline" > pipeline.txt
 
-        - name: Executing Shell script
-          run: |
-           chmod +x ascii-script.sh
-           ./ascii-script.sh
+      - name: Pause for 15 seconds
+        run: sleep 15
+
+  ascii_verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait briefly
+        run: sleep 5
+
+      - name: Verify file exists
+        run: test -s pipeline.txt
+
+  ascii_output:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display banner
+        run: cat pipeline.txt
