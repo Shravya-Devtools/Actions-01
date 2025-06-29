@@ -1,24 +1,16 @@
 name: Generate GitHub ASCII Artwork
-on:
-  push
+
+on: push
+
 jobs:
-  ascii_job:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v4
+    first-job:
+        runs-on: ubuntu-latest
+        steps:
+        - name: checkout repo
+          uses: actions/checkout@v4
 
-    - name: Install Figlet Program
-      run: sudo apt-get install figlet -y
+        - name: List repo files
+          run: ls -ltra
 
-    - name: Create GitHub Actions Banner
-      run: figlet "GitHub Actions" > github_actions.txt
-
-    - name: Verify Output File Is Not Empty
-      run: test -s github_actions.txt
-
-    - name: Read Banner File
-      run: cat github_actions.txt
-
-    - name: List Repo Files
-      run: ls -ltra
+        - name: Executing Shell script
+          run: ./ascii-script.sh
